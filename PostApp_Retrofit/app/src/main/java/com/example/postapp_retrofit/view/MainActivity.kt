@@ -33,8 +33,14 @@ class MainActivity : AppCompatActivity() {
 
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         println("Exception thrown in one of the children: ${throwable.localizedMessage}")
-
     }
+    // uygulamayı çökertmeden hata ayıklama yapmak için kullanılır
+
+    // lifecycleScope.launch(handler) {
+    //     throw Excepiton()
+    // }
+
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
