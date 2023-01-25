@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         // Disposable
         private var compositeDisposable: CompositeDisposable?=null
 
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        println("Exception thrown in one of the children: ${throwable.localizedMessage}")
+
+    }
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
@@ -63,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = retrofit.getData()
             //arkada io threadinde veriler çekiliyor ve  main thread e geçiyor
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main + exceptionHandler) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         postModels = ArrayList(it)
