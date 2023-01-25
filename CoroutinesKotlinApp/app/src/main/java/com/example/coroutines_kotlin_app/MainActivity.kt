@@ -2,10 +2,7 @@ package com.example.coroutines_kotlin_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         // 100000 tane println işlemi yapılıyor.
         // Global Scope
+        // Global Scope, uygulama boyunca süren bir iş parçacığıdır.
         GlobalScope.launch {
             repeat(100000) {
                 println("Ömerrrr $it")
@@ -50,6 +48,35 @@ class MainActivity : AppCompatActivity() {
         // runBlocking Start
         // runBlocking(1 sn sonra)
         // runBlocking End
+
+
+
+        // CoroutineScope
+        // ya içinde coroutine'lar da çalıştırıyor ya da suspend function'larda çalıştırıyor.
+
+        //örneğin
+        // runBlocking{
+        // ..
+        // coroutineScope{
+        //      launch{
+        //          delay(1000)
+        //          println("Coroutine Scope")
+        //      }
+
+
+        // CoroutineScope hangi thread'de çalıştırılırsa, o thread'de çalışır.
+        // CoroutineScope, Global Scope'dan farklı olarak CoroutineScope thread de GlobalScope uygulamada çalışır.
+        println("Coroutine Scope Start")
+        CoroutineScope(Dispatchers.Default).launch {
+            delay(5000)
+            println("Coroutine Scope")
+        }
+        println("Coroutine Scope End")
+        // Sırası ile
+        // Coroutine Scope Start
+        // Coroutine Scope End
+        // Coroutine Scope(5 sn sonra)
+
 
 
 
